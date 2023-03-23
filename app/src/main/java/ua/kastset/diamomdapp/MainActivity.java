@@ -19,7 +19,7 @@ import ua.kastset.diamomdapp.model.ArrayListCardType;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static int entireDeckOfCards = 35;
     private static int allCardsPlayed = entireDeckOfCards;
-    private static int badNumber = 2;
+    private static int badCardThatCanKill = 2;
     private static int amountRelic = 0;
     public static double losingChance;
     List<Card> gameBoard = new ArrayList<>();
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         gridView.setAdapter(gridViewAdapter);
         gridView.setOnItemClickListener(this);
         createNewRound();
-        badNumber = 2;
+        badCardThatCanKill = 2;
 
     }
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             --allCardsPlayed;
             if (playerAction.getCards().equals("Treasure")) {
                 Toast.makeText(MainActivity.this, playerAction.playCard(), Toast.LENGTH_SHORT).show();
-                losingChance = ((double) (badNumber) / allCardsPlayed) * 100;
+                losingChance = ((double) (badCardThatCanKill) / allCardsPlayed) * 100;
                 String mistakeToLose = String.format("%.1f", losingChance) ;
                 Toast.makeText(MainActivity.this, mistakeToLose + "%", Toast.LENGTH_SHORT).show();
             } else {
@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         Toast.makeText(MainActivity.this, "you dead", Toast.LENGTH_SHORT).show();
                     }
                 }
-                losingChance = ((double) (badNumber) / allCardsPlayed) * 100;
+                losingChance = ((double) (badCardThatCanKill) / allCardsPlayed) * 100;
                 String mistakeToLose = String.format("%.1f", losingChance);
                 Toast.makeText(MainActivity.this, mistakeToLose + "%", Toast.LENGTH_SHORT).show();
-                badNumber +=2 ;
+                badCardThatCanKill +=2 ;
                 gameBoard.add(playerAction);
             }
         }
