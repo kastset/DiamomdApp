@@ -1,9 +1,6 @@
-package ua.kastset.diamomdapp.cardmechanik;
+package ua.kastset.diamomdapp.cardlist;
 
-public class Card {
-    public boolean isDead = false;
-
-    public void kill() {}
+public abstract class Card {
 
     private final Integer iconId;
     private final String cards;
@@ -21,7 +18,9 @@ public class Card {
         this.cards = cards;
     }
 
+
     public String playCard() {
         return "You play a card";
     }
+
 }

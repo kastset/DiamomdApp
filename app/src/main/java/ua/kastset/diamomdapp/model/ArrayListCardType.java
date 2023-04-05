@@ -4,7 +4,7 @@ package ua.kastset.diamomdapp.model;
 import java.util.ArrayList;
 
 import ua.kastset.diamomdapp.R;
-import ua.kastset.diamomdapp.cardmechanik.*;
+import ua.kastset.diamomdapp.cardlist.*;
 
 public class ArrayListCardType {
 

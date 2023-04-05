@@ -5,69 +5,61 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import ua.kastset.diamomdapp.cardmechanik.*;
+import ua.kastset.diamomdapp.cardlist.*;
 import ua.kastset.diamomdapp.design.GridViewAdapter;
 import ua.kastset.diamomdapp.model.ArrayListCardType;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private static int entireDeckOfCards = 35;
-    private static int allCardsPlayed = entireDeckOfCards;
-    private static int badCardThatCanKill = 2;
-    private static int amountRelic = 0;
-    public static double losingChance;
-    List<Card> gameBoard = new ArrayList<>();
-
+    PlayerActions player = new PlayerActions();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ArrayListCardType listCards = new ArrayListCardType();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         GridView gridView = findViewById(R.id.grid_view_item_list);
+        TextView textView = findViewById(R.id.text_view_id);
+        Button buttonCamp = findViewById(R.id.button_camp);
+        Button buttonNewGame = findViewById(R.id.button_new_game);
+        PopupWindow popupWindow = new PopupWindow();
+        player = new PlayerActions(this);
+
+        ArrayListCardType listCards = new ArrayListCardType();
+
         GridViewAdapter gridViewAdapter = new GridViewAdapter(MainActivity.this,
                 listCards.setListData());
+
         gridView.setAdapter(gridViewAdapter);
         gridView.setOnItemClickListener(this);
-        createNewRound();
-        badCardThatCanKill = 2;
-
+        buttonCamp.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                textView.setText("Выберите карту");
+                if (player.getAmountRelic() != 0) {
+                    popupWindow.onButtonShowPopupWindowClick(v,player);
+                } else {
+                    player.setAllCardsWasPlayed(player.getEntireDeckOfCards());
+                }
+                player.createNewRound();
+            }
+        });
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                textView.setText("Вы начали игру с начала");
+                player.createNewGame();
+            }
+        });
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Card playerAction = (Card) parent.getItemAtPosition(position);
-        if (!playerAction.isDead) {
-            --allCardsPlayed;
-            if (playerAction.getCards().equals("Treasure")) {
-                Toast.makeText(MainActivity.this, playerAction.playCard(), Toast.LENGTH_SHORT).show();
-                losingChance = ((double) (badCardThatCanKill) / allCardsPlayed) * 100;
-                String mistakeToLose = String.format("%.1f", losingChance) ;
-                Toast.makeText(MainActivity.this, mistakeToLose + "%", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, playerAction.playCard(), Toast.LENGTH_SHORT).show();
-                for (Card card : gameBoard) {
-                    if(card.getCards().equals(playerAction.getCards())) {
-                        Toast.makeText(MainActivity.this, "you dead", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                losingChance = ((double) (badCardThatCanKill) / allCardsPlayed) * 100;
-                String mistakeToLose = String.format("%.1f", losingChance);
-                Toast.makeText(MainActivity.this, mistakeToLose + "%", Toast.LENGTH_SHORT).show();
-                badCardThatCanKill +=2 ;
-                gameBoard.add(playerAction);
-            }
+        Card card = (Card) parent.getItemAtPosition(position);
+        if(!player.isDead()) {
+                Toast.makeText(MainActivity.this, card.playCard(), Toast.LENGTH_SHORT).show();
+                player.playCard(card);
         }
-    }
-
-    public void createNewRound () {
-        allCardsPlayed = entireDeckOfCards - amountRelic;
-        gameBoard.clear();
     }
 }

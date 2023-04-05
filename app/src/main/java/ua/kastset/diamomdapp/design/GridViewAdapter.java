@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 import ua.kastset.diamomdapp.R;
-import ua.kastset.diamomdapp.cardmechanik.Card;
+import ua.kastset.diamomdapp.cardlist.Card;
 
 public class GridViewAdapter extends ArrayAdapter<Card> {
 

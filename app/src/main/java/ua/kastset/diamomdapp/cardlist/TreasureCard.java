@@ -1,7 +1,6 @@
-package ua.kastset.diamomdapp.cardmechanik;
+package ua.kastset.diamomdapp.cardlist;
 
 public class TreasureCard extends Card{
-	boolean isDead;
 
 	public TreasureCard(Integer iconId,String cards) {
 		super(iconId,cards);

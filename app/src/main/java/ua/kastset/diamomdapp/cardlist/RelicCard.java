@@ -1,7 +1,6 @@
-package ua.kastset.diamomdapp.cardmechanik;
+package ua.kastset.diamomdapp.cardlist;
 
 public class RelicCard extends Card {
-	boolean isDead;
 
 	public RelicCard(Integer iconId,String cards) {
 		super(iconId,cards);
