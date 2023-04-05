@@ -12,7 +12,7 @@
         android:focusable="true"
         android:textSize="20sp"
         android:layout_marginTop="5dp"
-        android:hint="@string/numberofRelic" />
+        android:hint="@string/numberOfRelic" />
 
 
     <Button

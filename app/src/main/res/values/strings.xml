@@ -1,9 +1,14 @@
 <resources>
-    <string name="app_name">DiamomdApp</string>
+    <string name="appName">DiamomdApp</string>
+    <string name="cardType">Card type</string>
     <string name="percentToLose">Здесь покажут ваш шанс на поражение</string>/>
-    <string name="go_camp">Идти в лагерь</string>
-    <string name="new_game">Новая игра</string>
-    <string name="numberofRelic">Укажите кол-во реликвий которые вы забрали</string>
+    <string name="goCamp">Идти в лагерь</string>
+    <string name="newGame">Новая игра</string>
+    <string name="numberOfRelic">Укажите кол-во реликвий которые вы забрали</string>
+    <string name="chouseCard">Выбирте карту</string>
+    <string name="youStartedNewGameMessage">Вы начали игру с начала</string>
+    <string name="StartTheGameFromTheBeginning">Начните игру с начала</string>
     <string name="confirn">Потверждаю</string>
-    <string name="card_type">Card type</string>
+    <string name="goToCamp">Возвращайтесь в лагерь</string>
+    <string name="ChanceToLose">Шанс на поражение </string>
 </resources>

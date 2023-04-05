@@ -26,7 +26,8 @@ public class PlayerActions {
     private List<Card> gameBoard = new ArrayList<>();
     private TextView textView;
 
-    public PlayerActions() {}
+    public PlayerActions() {
+    }
 
     public PlayerActions(Activity activity) {
         textView = activity.findViewById(R.id.text_view_id);
@@ -44,18 +45,6 @@ public class PlayerActions {
         this.allCardsWasPlayed = allCardsWasPlayed;
     }
 
-    public void playedOneCard() {
-        allCardsWasPlayed--;
-    }
-
-    public double getLosingChance() {
-        return losingChance;
-    }
-
-    public void countLosingChance() {
-        losingChance = ((double) (badCardThatCanKill) / allCardsWasPlayed) * 100;
-    }
-
     public int getAmountRelic() {
         return amountRelic;
     }
@@ -66,55 +55,43 @@ public class PlayerActions {
         this.amountRelic = 0;
     }
 
-    public void playedOneRelic() {
-        amountRelic++;
-    }
-
-    public void putBadCardThatCanKill() {
-        badCardThatCanKill += 2;
-    }
-
     public boolean isDead() {
         return playerIsDead;
     }
 
     @SuppressLint("SetTextI18n")
     public void installMistakeToLose() {
-        String mistakeToLose = String.format(Locale.ROOT, "%.1f", getLosingChance());
-        textView.setText("Шанс на поражение " + mistakeToLose + "%");
+        losingChance = ((double) (badCardThatCanKill) / allCardsWasPlayed) * 100;
+        String mistakeToLose = String.format(Locale.ROOT, "%.1f", losingChance);
+        textView.setText("Шанс на поражение" + mistakeToLose + "%");
     }
 
     public void playCard(Card card) {
         if (!playerIsDead || allCardsWasPlayed == 0) {
             if (card.getCards().equals("Treasure")) {
-                if(amountTreasure < 15){
-                    playedOneCard();
-                    countLosingChance();
-                    installMistakeToLose();
+                if (amountTreasure < 15) {
+                    allCardsWasPlayed--;
                     amountTreasure++;
                 }
             } else if (card.getCards().equals("Relic")) {
                 if (amountRelic < maxNumberOfRelic) {
-                    playedOneCard();
-                    playedOneRelic();
-                    countLosingChance();
-                    installMistakeToLose();
+                    allCardsWasPlayed--;
+                    amountRelic++;
                 }
             } else {
                 for (Card cards : gameBoard) {
                     if (cards.getCards().equals(card.getCards())) {
-                        textView.setText("Возвращайтесь в лагерь");
+                        textView.setText(R.string.goToCamp);
                         playerIsDead = true;
                         deathCount--;
                         return;
                     }
                 }
-                playedOneCard();
-                putBadCardThatCanKill();
-                countLosingChance();
-                installMistakeToLose();
+                allCardsWasPlayed--;
+                badCardThatCanKill += 2;
                 gameBoard.add(card);
             }
+            installMistakeToLose();
         }
     }
 
@@ -122,11 +99,12 @@ public class PlayerActions {
         if (deathCount != 0) {
             losingChance = 0;
             badCardThatCanKill = 0;
+            amountTreasure = 0;
             playerIsDead = false;
             gameBoard.clear();
         } else {
             playerIsDead = true;
-            textView.setText("Начните игру с начала");
+            textView.setText(R.string.StartTheGameFromTheBeginning);
         }
     }
 
@@ -136,6 +114,7 @@ public class PlayerActions {
         playerIsDead = false;
         deathCount = 5;
         losingChance = 0;
+        amountTreasure = 0;
         howMuсhPlayerUseRelic = 0;
         badCardThatCanKill = 0;
         maxNumberOfRelic = 5;

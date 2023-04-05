@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         gridView.setOnItemClickListener(this);
         buttonCamp.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText("Выберите карту");
+                textView.setText(R.string.chouseCard);
                 if (player.getAmountRelic() != 0) {
                     popupWindow.onButtonShowPopupWindowClick(v,player);
                 } else {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                textView.setText("Вы начали игру с начала");
+                textView.setText(R.string.youStartedNewGameMessage);
                 player.createNewGame();
             }
         });
